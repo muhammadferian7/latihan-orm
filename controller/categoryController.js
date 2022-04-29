@@ -71,7 +71,7 @@ module.exports = {
         try {
             const data = await model.category.destroy({
                 where: {
-                    id: req.body.id
+                    id: req.params.id
                 }
             })
 
@@ -79,6 +79,29 @@ module.exports = {
                 "success" : true,
                 "error" : 0,
                 "message" : "data success delete",
+                "data" : data
+            })
+        } catch (error) {
+            return res.status(500).json({
+                "success" : false,
+                "error" : error.code,
+                "message" : error,
+                "data" : null
+            })
+        }
+    },
+    find: async (req, res) => {
+        try {
+            const data = await model.category.findOne({
+                where: {
+                    id: req.params.id
+                }
+            })
+
+            return res.status(200).json({
+                "success" : true,
+                "error" : 0,
+                "message" : "data success listed",
                 "data" : data
             })
         } catch (error) {
