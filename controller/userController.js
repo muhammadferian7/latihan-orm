@@ -1,6 +1,6 @@
-const model = require('../models'),
-    { genSalt, hash, compareSync } = require('bcrypt'),
-    jwt = require('jsonwebtoken')
+const model = require('../models')
+const { genSalt, hash, compareSync } = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 
 
@@ -12,25 +12,6 @@ const cryptPassword = async (password) => {
 
 
 module.exports = {
-    list: async (req, res) => {
-        try {
-            const datas = await model.user.findAll()
-
-            return res.status(200).json({
-                "success" : true,
-                "error" : 0,
-                "message" : "data success listed",
-                "data" : datas
-            })
-        } catch (error) {
-            return res.status(500).json({
-                "success" : false,
-                "error" : error.code,
-                "message" : error,
-                "data" : null
-            })
-        }
-    },
     register: async (req, res) => {
         try {
             
@@ -70,7 +51,7 @@ module.exports = {
                 return res.status(404).json({
                     "success" : false,
                     "error" : 404,
-                    "message" : 'User not found',
+                    "message" : 'user not found',
                     "data" : null
                 })
             
@@ -94,34 +75,11 @@ module.exports = {
             return res.status(409).json({
                 "success" : false,
                 "error" : 409,
-                "message" : "Invalid Credentials",
+                "message" : "invalid Credentials",
                 "data" : null
             })
         } catch (error) {
             console.log(error)
-            return res.status(500).json({
-                "success" : false,
-                "error" : error.code,
-                "message" : error,
-                "data" : null
-            })
-        }
-    },
-    destroy:  async (req, res) => {
-        try {
-            const data = await model.user.destroy({
-                where: {
-                    id: req.params.id
-                }
-            })
-
-            return res.status(200).json({
-                "success" : true,
-                "error" : 0,
-                "message" : "data success delete",
-                "data" : data
-            })
-        } catch (error) {
             return res.status(500).json({
                 "success" : false,
                 "error" : error.code,
