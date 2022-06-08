@@ -4,11 +4,12 @@ const { list, create, update, destroy, find } = require('../controller/categoryC
 const validate = require ('../middleware/validate.js')
 const { createCategoryRules } = require('../validators/rule.js')
 const checkToken = require('../middleware/checkToken.js')
+const checkRole = require('../middleware/checkRole.js')
 
-router.get('/list', checkToken, list)
-router.post('/create', checkToken, validate(createCategoryRules), create)
-router.put('/update', checkToken, update)
-router.delete('/destroy/:id', checkToken, destroy)
-router.get('/find/:id', checkToken, find)
+router.get('/list', list)
+router.post('/create', create)
+router.put('/update', update)
+router.delete('/destroy/:id', destroy)
+router.get('/find/:id', find)
 
 module.exports = router

@@ -1,0 +1,215 @@
+swagger: "2.0"
+info:
+  title: "API Documentation Example"
+  description: ""
+  version: "1.0.0"
+host: "localhost:3000"
+basePath: "/api"
+paths:
+  /user/login:
+    post:
+      summary: "login"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "username"
+              - "password"
+            properties:
+              username:
+                type: "string"
+              password:
+                type: "string"
+      responses:
+        "200":
+          description: "successfull operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                success:
+                  type: "boolean"
+                  default: true
+                message:
+                  type: "string"
+                data:
+                  type: "object"
+                  properties:
+                    token:
+                      type: "string"
+                error:
+                  type: "string"
+        "400":
+          description: "server error"
+
+  /category/list:
+    get:
+      summary: "list of category"
+      description: ""
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successfull operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/CategoryResponse"
+        "400":
+          description: "server error"
+      security:
+        - bearerAuth: []
+
+  /category/find/{id}:
+    get:
+      summary: "find one category"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"   
+      responses:
+        "200":
+          description: "successfull operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/CategoryResponse"
+        "400":
+          description: "server error"
+      security:
+        - bearerAuth: []
+
+  /category/create:
+    post:
+        summary: "create category"
+        description: ""
+        produces:
+          - "application/json"
+        parameters:
+          - name: "body"
+            in: "body"
+            required: true
+            schema:
+              type: "object"
+              required:
+                - "name"
+                - "description"
+              properties:
+                name:
+                  type: "string"
+                description:
+                  type: "string"
+                is_active:
+                  type: "boolean"
+                  default: true   
+        responses:
+          "200":
+            description: "successfull operation"
+            schema:
+              items:
+                $ref: "#/definitions/CategoryResponse"
+          "400":
+            description: "server error"
+        security:
+          - bearerAuth: []   
+
+  /category/update:
+    put:
+        summary: "update category"
+        description: ""
+        produces:
+          - "application/json"
+        parameters:
+          - name: "body"
+            in: "body"
+            required: true
+            schema:
+              type: "object"
+              required:
+                - "name"
+                - "description"
+              properties:
+                id:
+                  type: "integer"
+                name:
+                  type: "string"
+                description:
+                  type: "string"
+                is_active:
+                  type: "boolean"
+                  default: true  
+        responses:
+          "200":
+            description: "successfull operation"
+            schema:
+              items:
+                $ref: "#/definitions/CategoryResponse"
+          "400":
+            description: "server error"
+        security:
+          - bearerAuth: []
+
+  /category/destroy/{id}:
+    delete:
+        summary: "delete category"
+        description: ""
+        produces:
+          - "application/json"
+        parameters:
+          - name: "id"
+            in: "path"
+            required: true
+            schema:
+              type: "integer"
+        responses:
+          "200":
+            description: "successfull operation"
+            schema:
+              items:
+                $ref: "#/definitions/CategoryResponse"
+          "400":
+            description: "server error"
+        security:
+          - bearerAuth: []
+
+securityDefinitions:
+  bearerAuth:     
+    name: Authorization
+    type: apiKey
+    scheme: bearer
+    in: header
+
+definitions:
+  CategoryResponse:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+        default: true
+      message:
+        type: "string"
+      data:
+        type: "object"
+        properties:
+          name:
+            type: "string"
+          description:
+            type: "string"
+          is_active:
+            type: "boolean"
+            default: true
+      error:
+        type: "string"
+       
